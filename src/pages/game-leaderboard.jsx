@@ -84,16 +84,22 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
         }}
       />
 
-      <Row>
-        <Col className="text-center">
-          <form onSubmit={handleFormSubmit}>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={handleInputChange}
-              placeholder="Search..."
-            />
-            <button type="submit">Search</button>
+      <Row className="mb-4">
+        <Col className="d-flex justify-content-center">
+          <form onSubmit={handleFormSubmit} className="d-flex w-100 w-md-50 mx-auto">
+            <div className="input-group shadow-sm">
+              <input
+                type="text"
+                className="form-control border-end-0"
+                value={searchQuery}
+                onChange={handleInputChange}
+                placeholder="Search for games..."
+                aria-label="Search for games"
+              />
+              <button className="btn btn-primary rounded-end" type="submit">
+                Search
+              </button>
+            </div>
           </form>
         </Col>
       </Row>

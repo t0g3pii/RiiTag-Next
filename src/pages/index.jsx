@@ -179,24 +179,26 @@ function IndexPage({ userCount, playCount, randomUsers }) {
               <li>Yuzu Discord RPC</li>
             </ul>
           </Col> */}
-          <Col>
-            <h5 className="text-center">Wii</h5>
-            <ul>
-              {/* <li>Dolphin Discord RPC (Not working)</li> --> */}
-              <li>USB Loaders</li>
-              <ul>
-                <li>Configurable USB Loader</li>
-                <li>USB Loader GX</li>
-                <li>WiiFlow</li>
+          <Col className="text-center">
+            <h5>Wii</h5>
+            <div className="d-flex flex-column align-items-center">
+              <ul className="text-start">
+                <li>USB Loaders</li>
+                <ul>
+                  <li>Configurable USB Loader</li>
+                  <li>USB Loader GX</li>
+                  <li>WiiFlow</li>
+                </ul>
               </ul>
-            </ul>
+            </div>
           </Col>
-          <Col>
-            <h5 className="text-center">Wii U</h5>
-            <ul>
-              <li>Aroma Plugin</li>
-              {/* <li>Cemu Discord RPC (Not working)</li> */}
-            </ul>
+          <Col className="text-center">
+            <h5>Wii U</h5>
+            <div className="d-flex flex-column align-items-center">
+              <ul className="text-start">
+                <li>Aroma Plugin</li>
+              </ul>
+            </div>
           </Col>
         </Row>
       </Row>
