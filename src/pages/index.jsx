@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import useInfo from '@/lib/swr-hooks/useInfo';
@@ -24,7 +25,7 @@ export async function getStaticProps() {
   const randomUsers = await prisma.$queryRaw`
       SELECT user.username, user.name_on_riitag, user.updated_at
       FROM user
-      WHERE user.coins > 10
+      WHERE user.coins > 5
       ORDER BY RAND()
       LIMIT 5
   `;
@@ -58,7 +59,7 @@ function IndexPage({ userCount, playCount, randomUsers }) {
       <NextSeo />
       <Row>
         <Col className="text-center">
-          <h1>Welcome to RiiTag!</h1>
+          <h1>Welcome to t0g3pii's RiiTag!</h1>
           <p className="mt-4">
             RiiTag is a customizable gamertag. By sharing your
             gamertag, you can show what you&apos;ve been
@@ -68,11 +69,14 @@ function IndexPage({ userCount, playCount, randomUsers }) {
             <a href="https://gametdb.com/" target="_blank" rel="noreferrer">
               GameTDB
             </a>{' '}
-            and this service is developed by{' '}
+            , this service is developed by{' '}
             <a href="https://rc24.xyz/" target="_blank" rel="noreferrer">
               RiiConnect24
-            </a>
-            .
+            </a>{' '}
+            and this service is maintained currently by{' '}
+            <a href="https://t0g3pii.de/" target="_blank" rel="noreferrer">
+              t0g3pii
+            </a>.
           </p>
         </Col>
       </Row>
@@ -98,9 +102,20 @@ function IndexPage({ userCount, playCount, randomUsers }) {
               >
                 <Button size="lg">
                   <FontAwesomeIcon className="me-2" icon={faQuestionCircle} />
-                  Instructions
+                  Old Instructions (Might not work!)
                 </Button>
               </a>
+              <a
+                href="https://github.com/t0g3pii/RiiTag-RPC/blob/master/GUIDE.md"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <Button size="lg">
+                  <FontAwesomeIcon className="me-2" icon={faBook} />
+                  New Instructions
+                </Button>
+              </a>
+
             </Col>
           </Row>
         ) : null
@@ -150,24 +165,24 @@ function IndexPage({ userCount, playCount, randomUsers }) {
           Platforms Supported
         </h3>
         <Row className="mt-4">
-          <Col>
-            <h5 className="text-center">3DS</h5>
+          {/* <Col>
+            <h5 className="text-center">3DS (Untested, might be Broke)</h5>
             <ul>
               <li>3DS-RPC Discord RPC</li>
               <li>Citra Discord RPC</li>
             </ul>
-            <h5 className="text-center">Switch</h5>
+            <h5 className="text-center">Switch (Untested, might be Broke)</h5>
             <ul>
               <li>NSO-RPC Discord RPC</li>
               <li>Ryujinx Discord RPC</li>
               <li>SwitchPresence-Rewritten Discord RPC</li>
               <li>Yuzu Discord RPC</li>
             </ul>
-          </Col>
+          </Col> */}
           <Col>
             <h5 className="text-center">Wii</h5>
             <ul>
-              <li>Dolphin Discord RPC</li>
+              {/* <li>Dolphin Discord RPC (Not working)</li> --> */}
               <li>USB Loaders</li>
               <ul>
                 <li>Configurable USB Loader</li>
@@ -180,7 +195,7 @@ function IndexPage({ userCount, playCount, randomUsers }) {
             <h5 className="text-center">Wii U</h5>
             <ul>
               <li>Aroma Plugin</li>
-              <li>Cemu Discord RPC</li>
+              {/* <li>Cemu Discord RPC (Not working)</li> */}
             </ul>
           </Col>
         </Row>

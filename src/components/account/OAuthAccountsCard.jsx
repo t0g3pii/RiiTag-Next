@@ -14,8 +14,7 @@ function OAuthAccountsCard({ accounts }) {
           <FontAwesomeIcon className="me-1" icon={faDiscord} />
           <strong>Discord</strong>
         </>
-        - Linked on {dayjs(created_at).format(DATE_FORMAT)}
-        {accounts.length}
+        - Linked on {dayjs(created_at).format(DATE_FORMAT)} - ({accounts.length})
       </Col>
     </Row>
   );

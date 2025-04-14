@@ -77,13 +77,6 @@ function UserInformationCard({ user, isLoggedIn }) {
                 </Button>
               </a>
 
-              <a href={`/api/user/${user.username}/riitag.wad`}>
-                <Button variant="success">
-                  <FontAwesomeIcon className="me-1" icon={faWifi} /> RiiTag
-                  Channel
-                </Button>
-              </a>
-
               <Link href="/edit" passHref>
                 <Button variant="primary">
                   <FontAwesomeIcon className="me-1" icon={faPen} /> Edit Tag

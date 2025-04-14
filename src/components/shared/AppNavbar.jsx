@@ -37,6 +37,11 @@ function AppNavbar() {
                 Leaderboard
               </Nav.Link>
             </Link>
+            <Link href="/friends" passHref legacyBehavior>
+              <Nav.Link disabled active={router.pathname === '/friends'}>
+                Friend Codes
+              </Nav.Link>
+            </Link>
           </Nav>
           <Nav className="ms-auto">
             <UserMenu />

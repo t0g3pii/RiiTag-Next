@@ -1,8 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap';
-import safeJsonStringify from 'safe-json-stringify';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import { getGameLeaderboard, getGameLeaderboardSearch } from '@/lib/riitag/leaderboard';
 import GameLeaderboardCard from '@/components/leaderboard/GameLeaderboardCard';
@@ -19,14 +17,11 @@ export async function getServerSideProps({ query }) {
     page = 1;
   }
 
-  // Add logic for the search handler
   let leaderboard;
   let totalGames;
-  if (search == "null") {
-    // Call the game leaderboard function here
+  if (search === "null" || search === null || search === undefined || search === "") {
     [totalGames, leaderboard] = await getGameLeaderboard(page, limit);
   } else {
-    // Call your search function here and pass the search parameter
     [totalGames, leaderboard] = await getGameLeaderboardSearch(page, limit, search);
   }
 
@@ -42,33 +37,29 @@ export async function getServerSideProps({ query }) {
 }
 
 function GameLeaderboardPage({ page, totalPages, leaderboard }) {
-  const [currentPage, setCurrentPage] = useState(page);
+  const [currentPage, setCurrentPage] = useState(undefined);
   const [games, setGames] = useState(leaderboard);
-  const [total, setTotal] = useState(totalPages);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handlePageClick = async (event) => {
+  // Fallback-Wert während SSR
+  const actualPage = currentPage ?? page;
+
+  useEffect(() => {
+    setCurrentPage(page);
+  }, [page]);
+
+  const handlePageClick = (event) => {
     const newPage = event.selected + 1;
     const searchParameters = new URLSearchParams(window.location.search);
     const searchQuery = searchParameters.get("search");
-
     updateURLPageParameter(newPage, searchQuery);
-  };
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const updateURLParameter = (query) => {
-    const parameters = new URLSearchParams(window.location.search);
-    parameters.set('search', query);
-    const newURL = `${window.location.pathname  }?${  parameters.toString()}`;
-    window.history.replaceState({}, '', newURL);
-    window.location.reload();
   };
 
   const updateURLPageParameter = (page, search) => {
     const parameters = new URLSearchParams(window.location.search);
     parameters.set('page', page);
     parameters.set('search', search);
-    const newURL = `${window.location.pathname  }?${  parameters.toString()}`;
+    const newURL = `${window.location.pathname}?${parameters.toString()}`;
     window.history.replaceState({}, '', newURL);
     window.location.reload();
   };
@@ -76,7 +67,6 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     updateURLPageParameter(1, searchQuery);
-    // Perform search logic or other actions
   };
 
   const handleInputChange = (event) => {
@@ -88,11 +78,12 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
       <NextSeo
         title="Leaderboard"
         description="See what people have played the most while connected to their RiiTag!"
-        canonical={`${ENV.BASE_URL}/game-leaderboard?page=${currentPage}&search=${searchQuery}`}
+        canonical={`${ENV.BASE_URL}/game-leaderboard?page=${actualPage}&search=${searchQuery}`}
         openGraph={{
-          url: `${ENV.BASE_URL}/game-leaderboard?page=${currentPage}&search=${searchQuery}`,
+          url: `${ENV.BASE_URL}/game-leaderboard?page=${actualPage}&search=${searchQuery}`,
         }}
       />
+
       <Row>
         <Col className="text-center">
           <form onSubmit={handleFormSubmit}>
@@ -122,15 +113,15 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
               <GameLeaderboardCard
                 key={game.game_pk}
                 game={game}
-                position={limit * (currentPage - 1) + index + 1}
+                position={limit * (actualPage - 1) + index + 1}
               />
             ))}
           </Row>
 
           <Pagination
-            currentPage={currentPage - 1}
+            currentPage={actualPage - 1} // zero-based
             handlePageClick={handlePageClick}
-            totalPages={total}
+            totalPages={totalPages}
           />
         </>
       )}

@@ -8,6 +8,7 @@ import {
   faPen,
   faSignOutAlt,
   faUser,
+  faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { toast } from 'react-toastify';
@@ -94,6 +95,19 @@ function UserMenu() {
             <span>Edit Mii</span>
           </NavDropdown.Item>
         </Link>
+        <NavDropdown.Item onClick={() => toast.error('Im currently working on this feature :) Please come back another day :D', {
+position: "bottom-center",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: false,
+draggable: true,
+progress: undefined,
+theme: "dark"
+})}>
+            <FontAwesomeIcon className="me-2" icon={faUserGroup} />
+            <span>Edit Friend Codes</span>
+          </NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item onClick={logout}>
           <FontAwesomeIcon className="me-2" icon={faSignOutAlt} />

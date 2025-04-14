@@ -1,20 +1,22 @@
+import styles from './Pagination.module.css';
+
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
 
 function Pagination({ currentPage, totalPages, handlePageClick }) {
   return (
     <ReactPaginate
-      containerClassName="pagination justify-content-center flex-wrap"
-      breakClassName="page-item"
-      breakLinkClassName="page-link"
-      pageClassName="page-item"
-      pageLinkClassName="page-link"
-      activeClassName="active"
-      disabledLinkClassName="disabled"
-      previousClassName="page-item"
-      previousLinkClassName="page-link"
-      nextClassName="page-item"
-      nextLinkClassName="page-link"
+      containerClassName={styles.pagination}
+      breakClassName={styles.pageItem}
+      breakLinkClassName={styles.pageLink}
+      pageClassName={styles.pageItem}
+      pageLinkClassName={styles.pageLink}
+      activeClassName={styles.active}
+      disabledClassName={styles.disabled}
+      previousClassName={styles.pageItem}
+      previousLinkClassName={styles.pageLink}
+      nextClassName={styles.pageItem}
+      nextLinkClassName={styles.pageLink}
       breakLabel="..."
       nextLabel="Next >"
       forcePage={currentPage}

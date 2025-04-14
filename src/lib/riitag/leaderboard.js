@@ -5,14 +5,14 @@ export async function getGameLeaderboard(page, limit) {
     prisma.game.count({
       where: {
         playcount: {
-          gt: 5,
+          gt: 1,
         },
       },
     }),
     prisma.game.findMany({
       where: {
         playcount: {
-          gt: 5,
+          gt: 1,
         },
       },
       take: limit,
@@ -32,7 +32,7 @@ export async function getGameLeaderboardSearch(page, limit, search) {
           contains: search,
         },
         playcount: {
-          gt: 5,
+          gt: 1,
         },
       },
     }),
@@ -42,7 +42,7 @@ export async function getGameLeaderboardSearch(page, limit, search) {
           contains: search,
         },
         playcount: {
-          gt: 5,
+          gt: 1,
         },
       },
       take: limit,
