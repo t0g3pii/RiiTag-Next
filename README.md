@@ -1,5 +1,18 @@
 # RiiTag Next
 
+## License & Fork Notice
+
+This project is a **modified fork** of the original
+**RiiTag Next by RiiConnect24**
+
+Original repository: [https://github.com/RiiConnect24/RiiTag-Next](https://github.com/RiiConnect24/RiiTag-Next).
+All changes in this fork were made by **Nico Hartwig (t0g3pii)**.
+
+This software is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+A copy of the license is available in the `LICENSE` file or at:
+[https://www.gnu.org/licenses/agpl-3.0.en.html](https://www.gnu.org/licenses/agpl-3.0.en.html)
+
+--- 
 This is [RiiTag](https://tag.rc24.xyz/) rewritten in [Next.js](https://nextjs.org/).
 
 ## Features
