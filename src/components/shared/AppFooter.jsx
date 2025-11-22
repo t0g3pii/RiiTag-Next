@@ -44,7 +44,16 @@ function AppFooter() {
             rel="external noopener noreferrer"
             target="_blank"
           >
-            Source
+            Original Source
+          </a>{' '}
+          -{' '}
+          <a
+            className="text-muted"
+            href="https://github.com/t0g3pii/RiiTag-Next"
+            rel="external noopener noreferrer"
+            target="_blank"
+          >
+            Forked Source
           </a>
         </Col>
       </Row>
