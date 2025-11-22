@@ -115,6 +115,17 @@ function IndexPage({ userCount, playCount, randomUsers }) {
                   New Instructions
                 </Button>
               </a>
+	      <a
+                href="https://discord.com/oauth2/authorize?client_id=1354611264801734696"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <Button size="lg">
+                  <FontAwesomeIcon className="me-2" icon={faDiscord} />
+                  Discord Bot & App
+                </Button>
+              </a>
+
 
             </Col>
           </Row>
