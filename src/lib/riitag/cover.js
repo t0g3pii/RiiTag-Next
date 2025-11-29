@@ -151,7 +151,7 @@ export async function getGameRegion(gameConsole, gameId) {
       return getWiiGameRegion(gameId);
     }
     case CONSOLE.SWITCH: {
-      return await getSwitchGameRegion(gameId);
+      return getSwitchGameRegion(gameId);
     }
     default: {
       throw new Error('Console must be one of wii, wiiu, 3ds, switch');
@@ -211,16 +211,16 @@ export async function getCover(gameConsole, coverType, gameId, region) {
     try {
       // Default region for game
       logger.debug('Cover DL: Default region for game');
-      return await downloadCover(gameConsole, coverType, region, gameId);
+      return downloadCover(gameConsole, coverType, region, gameId);
     } catch {
       try {
         // Fallback to EN
         logger.debug('Cover DL: Falling back to EN');
-        return await downloadCover(gameConsole, coverType, 'EN', gameId);
+        return downloadCover(gameConsole, coverType, 'EN', gameId);
       } catch {
         // Fallback to US
         logger.debug('Cover DL: Falling back to US');
-        return await downloadCover(gameConsole, coverType, 'US', gameId);
+        return downloadCover(gameConsole, coverType, 'US', gameId);
       }
     }
   } else {
@@ -249,12 +249,12 @@ export async function getCover(gameConsole, coverType, gameId, region) {
         region = 'KO';
       }
 
-      return await downloadCover(gameConsole, coverType, region, gameId);
+      return downloadCover(gameConsole, coverType, region, gameId);
     } catch {
       try {
         // Now we try the default cover-region (e.g. korea for korean game)
         logger.debug("Cover DL: Trying default region for game's region");
-        return await downloadCover(
+        return downloadCover(
           gameConsole,
           coverType,
           await getGameRegion(gameConsole, gameId),
@@ -264,11 +264,11 @@ export async function getCover(gameConsole, coverType, gameId, region) {
         try {
           // Fallback to EN
           logger.debug('Cover DL: Falling back to EN');
-          return await downloadCover(gameConsole, coverType, 'EN', gameId);
+          return downloadCover(gameConsole, coverType, 'EN', gameId);
         } catch {
           // Fallback to US
           logger.debug('Cover DL: Falling back to US');
-          return await downloadCover(gameConsole, coverType, 'US', gameId);
+          return downloadCover(gameConsole, coverType, 'US', gameId);
         }
       }
     }

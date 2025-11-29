@@ -13,7 +13,6 @@ import { isValidOverlay } from '@/lib/constants/forms/overlays';
 import { isValidFlag } from '@/lib/constants/forms/flags';
 import { isValidCoin } from '@/lib/constants/forms/coins';
 import { isValidFont } from '@/lib/constants/forms/fonts';
-import { BACKGROUNDS } from '@/lib/constants/forms/backgrounds';
 import GeneralCard from '@/components/edit/GeneralCard';
 import FontCard from '@/components/edit/FontCard';
 import ImagesCard from '@/components/edit/ImagesCard';

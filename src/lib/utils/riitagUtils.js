@@ -120,6 +120,8 @@ export async function getSwitchGameIdByNameAndRegion(gameName, region) {
       const gameRegions = findRegionByGameId(games, gameId);
 
       if (!gameRegions) {
+        // Kein Regions-Eintrag gefunden, nächster Kandidat
+        // eslint-disable-next-line no-continue
         continue;
       }
 
@@ -160,7 +162,6 @@ export async function getSwitchGameIdByNameAndRegion(gameName, region) {
         if (gameRegion === "ALL") {
           return gameId;
         }
-        console.log(gameId, region, gameRegion);
       }
     }
 

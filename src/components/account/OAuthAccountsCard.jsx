@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { Card, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 import dayjs from '@/lib/dayjs';
 import { DATE_FORMAT } from '@/lib/constants/miscConstants';
 

@@ -4,7 +4,6 @@ import { isBlank, isBoolean } from '@/lib/utils/utils';
 import { isValidCoverRegion } from '@/lib/constants/forms/coverRegions';
 import { isValidCoverType } from '@/lib/constants/forms/coverTypes';
 import { isValidOverlay } from '@/lib/constants/forms/overlays';
-import { BACKGROUNDS } from '@/lib/constants/forms/backgrounds';
 import { isValidFlag } from '@/lib/constants/forms/flags';
 import { isValidCoin } from '@/lib/constants/forms/coins';
 import { isValidFont } from '@/lib/constants/forms/fonts';

@@ -67,8 +67,8 @@ function ImagesCard({ values, errors, handleChange, username }) {
                 {errors.background}
               </Alert>
             )}
-            <br></br>
-            <br></br>
+            <br />
+            <br />
             <p>Upload Background</p>
             <Form.Control
               id="fileInput"
@@ -79,7 +79,7 @@ function ImagesCard({ values, errors, handleChange, username }) {
                 const formData = new FormData();
                 formData.append('file', event.currentTarget.files[0]);
 
-                values.background = username + ".png";
+                values.background = `${username}.png`;
 
                 return fetch('/api/account/background-upload', {
                   method: 'POST',
@@ -97,7 +97,17 @@ function ImagesCard({ values, errors, handleChange, username }) {
             <img
               alt="Background Preview"
               className="img-thumbnail mx-auto d-block"
-              src={!Number.isNaN(Number(values.background.replace(/.*\//, '').replace(/\.png$/, ''))) ? `api/account/uploaded-background` : `/img/background/${values.background}`}
+              src={
+                Number.isNaN(
+                  Number(
+                    values.background
+                      .replace(/.*\//, '')
+                      .replace(/\.png$/, '')
+                  )
+                )
+                  ? `/img/background/${values.background}`
+                  : 'api/account/uploaded-background'
+              }
             />
           </Col>
         </Row>
@@ -159,6 +169,7 @@ ImagesCard.propTypes = {
   values: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default ImagesCard;

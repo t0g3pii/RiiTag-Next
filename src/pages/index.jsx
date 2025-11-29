@@ -5,15 +5,13 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faBook } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
 import useInfo from '@/lib/swr-hooks/useInfo';
 import prisma from '@/lib/db';
 import RiiTagCarousel from '@/components/index/RiiTagCarousel';
 import safeJsonStringify from 'safe-json-stringify';
-import { Decimal } from 'decimal.js';
 
 export async function getStaticProps() {
   const userCount = await prisma.user.count();
@@ -59,7 +57,7 @@ function IndexPage({ userCount, playCount, randomUsers }) {
       <NextSeo />
       <Row>
         <Col className="text-center">
-          <h1>Welcome to t0g3pii's RiiTag!</h1>
+          <h1>Welcome to t0g3pii&apos;s RiiTag!</h1>
           <p className="mt-4">
             RiiTag is a customizable gamertag. By sharing your
             gamertag, you can show what you&apos;ve been
@@ -219,6 +217,7 @@ function IndexPage({ userCount, playCount, randomUsers }) {
 
 IndexPage.propTypes = {
   userCount: PropTypes.number.isRequired,
+  playCount: PropTypes.number.isRequired,
   randomUsers: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

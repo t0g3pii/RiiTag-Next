@@ -11,7 +11,8 @@ import ENV from '@/lib/constants/environmentVariables';
 const limit = TOTAL_GAMES_ON_LEADERBOARD;
 
 export async function getServerSideProps({ query }) {
-  let { page, search } = query;
+  let { page } = query;
+  const { search } = query;
   page = page === undefined ? 1 : Number.parseInt(page, 10);
   if (Number.isNaN(page) || page <= 0) {
     page = 1;
@@ -36,9 +37,25 @@ export async function getServerSideProps({ query }) {
   };
 }
 
+function updateURLPageParameter(pageNumber, search) {
+  const parameters = new URLSearchParams(window.location.search);
+  parameters.set('page', pageNumber);
+  parameters.set('search', search);
+  const newURL = `${window.location.pathname}?${parameters.toString()}`;
+  window.history.replaceState({}, '', newURL);
+  window.location.reload();
+}
+
+function handlePageClick(event) {
+  const newPage = event.selected + 1;
+  const searchParameters = new URLSearchParams(window.location.search);
+  const currentSearchQuery = searchParameters.get('search');
+  updateURLPageParameter(newPage, currentSearchQuery);
+}
+
 function GameLeaderboardPage({ page, totalPages, leaderboard }) {
-  const [currentPage, setCurrentPage] = useState(undefined);
-  const [games, setGames] = useState(leaderboard);
+  const [currentPage, setCurrentPage] = useState();
+  const games = leaderboard;
   const [searchQuery, setSearchQuery] = useState('');
 
   // Fallback-Wert während SSR
@@ -47,22 +64,6 @@ function GameLeaderboardPage({ page, totalPages, leaderboard }) {
   useEffect(() => {
     setCurrentPage(page);
   }, [page]);
-
-  const handlePageClick = (event) => {
-    const newPage = event.selected + 1;
-    const searchParameters = new URLSearchParams(window.location.search);
-    const searchQuery = searchParameters.get("search");
-    updateURLPageParameter(newPage, searchQuery);
-  };
-
-  const updateURLPageParameter = (page, search) => {
-    const parameters = new URLSearchParams(window.location.search);
-    parameters.set('page', page);
-    parameters.set('search', search);
-    const newURL = `${window.location.pathname}?${parameters.toString()}`;
-    window.history.replaceState({}, '', newURL);
-    window.location.reload();
-  };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();

@@ -21,6 +21,10 @@
     "global:check-dependencies": "npm-check --skip-unused"
   },
   "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/prop-types": "^15.7.15",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "eslint": "8.30.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-next": "13.1.1",

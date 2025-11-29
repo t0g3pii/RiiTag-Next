@@ -50,7 +50,7 @@ async function addSwitchGame(request, response) {
   let gameId;
   try {
     gameId = await getSwitchGameIdByNameAndRegion(gameName, user.cover_region);
-  } catch (err) {
+  } catch {
     return response
       .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
       .send({ error: 'Error resolving Switch game ID.' });

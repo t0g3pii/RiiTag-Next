@@ -1,11 +1,7 @@
 import { Button, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPen,
-  faQuestionCircle,
-  faWifi,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPen, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import dayjs from '@/lib/dayjs';
 import { DATE_FORMAT } from '@/lib/constants/miscConstants';

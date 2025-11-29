@@ -18,7 +18,9 @@ async function getMyUploadedBackground(request, response) {
     setFileHeaders(response, `${username}.png`);
     return response
         .status(HTTP_CODE.OK)
-        .send(await fs.promises.readFile(path.resolve(CACHE.BACKGROUNDS, username + ".png")));
+        .send(await fs.promises.readFile(
+          path.resolve(CACHE.BACKGROUNDS, `${username}.png`),
+        ));
 }
 
 const handler = ncWithSession().get(getMyUploadedBackground);

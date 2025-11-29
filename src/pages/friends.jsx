@@ -40,6 +40,16 @@ function FriendPage({ about }) {
             </Row>
             <Row className="mt-3">
                 <Col>
+                    <div
+                        className={styles.editorText}
+                        // Inhalt kommt aus der Datenbank und wird als HTML gerendert
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML={{ __html: about }}
+                    />
+                </Col>
+            </Row>
+            <Row className="mt-3">
+                <Col>
                     <Table striped bordered hover variant="dark" style={{textAlign: "center"}}>
                         <thead>
                             <tr>
