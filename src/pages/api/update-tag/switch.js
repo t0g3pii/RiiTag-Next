@@ -47,7 +47,15 @@ async function addSwitchGame(request, response) {
     });
   }
 
-  const gameId = await getSwitchGameIdByNameAndRegion(gameName, user.cover_region);
+  let gameId;
+  try {
+    gameId = await getSwitchGameIdByNameAndRegion(gameName, user.cover_region);
+  } catch (err) {
+    return response
+      .status(HTTP_CODE.INTERNAL_SERVER_ERROR)
+      .send({ error: 'Error resolving Switch game ID.' });
+  }
+
   if (!gameId) {
     return response
       .status(HTTP_CODE.BAD_REQUEST)

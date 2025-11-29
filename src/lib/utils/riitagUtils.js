@@ -83,7 +83,7 @@ export function getSimilarKeys(ids, gameName, keys) {
   return null;
 }
 
-export async function getSwitchGameIdByNameAndRegion(gameName) {
+export async function getSwitchGameIdByNameAndRegion(gameName, region) {
   const ids = JSON.parse(
     await fs.promises.readFile(path.resolve(DATA.IDS, 'switchtdb.json'), 'utf8')
   );
@@ -117,9 +117,13 @@ export async function getSwitchGameIdByNameAndRegion(gameName) {
     const games = result.datafile.game;
 
     for (const gameId of foundIds) {
-      const region = findRegionByGameId(games, gameId);
+      const gameRegions = findRegionByGameId(games, gameId);
 
-      for (const gameRegion of region) {
+      if (!gameRegions) {
+        continue;
+      }
+
+      for (const gameRegion of gameRegions) {
         // Europe
         if (region === "FR" && gameRegion === "FRA") {
           return gameId;
@@ -133,7 +137,7 @@ export async function getSwitchGameIdByNameAndRegion(gameName) {
         if (region === "AU" && gameRegion === "AUS") {
           return gameId;
         }
-        if (region === "EN" || region === "FR" || region === "DE" || region === "ES" || region === "IT" || region === "NL" || region === "PT" || region === "SE" || region === "DK" || region === "NO" || region === "FI" && gameRegion === "EUR") {
+        if ((region === "EN" || region === "FR" || region === "DE" || region === "ES" || region === "IT" || region === "NL" || region === "PT" || region === "SE" || region === "DK" || region === "NO" || region === "FI") && gameRegion === "EUR") {
           return gameId;
         }
         if (region === "KO" && gameRegion === "KOR") {
@@ -156,6 +160,7 @@ export async function getSwitchGameIdByNameAndRegion(gameName) {
         if (gameRegion === "ALL") {
           return gameId;
         }
+        console.log(gameId, region, gameRegion);
       }
     }
 
