@@ -90,7 +90,7 @@ export async function getMiiFromHexData(miiData) {
     return response.body;
   }
 
-  const hexRegex = /^[0-9a-fA-F]+$/;
+  const hexRegex = /^[\dA-Fa-f]+$/;
 
   // 2) Alte Wii-/CMOC-/MAE-Miis: reines Hex → RC24-Renderer verwenden
   if (hexRegex.test(miiData)) {
@@ -177,16 +177,16 @@ export async function getMiiHexDataFromDataOrUrl(input) {
   // Versuche, es als URL zu interpretieren (z.B. Mii Studio URL mit ?data=...).
   try {
     const parsedUrl = new URL(input);
-    const dataParam = parsedUrl.searchParams.get('data');
-    if (dataParam) {
-      return dataParam;
+    const dataParameter = parsedUrl.searchParams.get('data');
+    if (dataParameter) {
+      return dataParameter;
     }
   } catch {
     // Kein gültiger URL-String, weiter unten als Rohdaten behandeln.
   }
 
   const trimmed = input.trim();
-  const hexRegex = /^[0-9a-fA-F]+$/;
+  const hexRegex = /^[\dA-Fa-f]+$/;
 
   if (hexRegex.test(trimmed)) {
     return trimmed.toLowerCase();

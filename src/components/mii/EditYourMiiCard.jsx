@@ -49,31 +49,43 @@ function EditYourMiiCard({ miiInfo }) {
             }
 
             if (values.miiType === MII_TYPE.UPLOAD) {
-              if (values.uploadMethod === 'qr_or_file') {
-                if (values.file === null) {
-                  errors.file = 'Please choose a file.';
-                } else if (values.file.type !== 'image/jpeg') {
-                  if (
-                    !isBlank(values.file.type) ||
-                    !values.file.name.endsWith('.mae')
-                  ) {
-                    errors.file = 'This file is not supported.';
-                  } else if (values.file.size !== 74) {
-                    errors.file = 'File is too big.';
+              switch (values.uploadMethod) {
+                case 'qr_or_file': {
+                  if (values.file === null) {
+                    errors.file = 'Please choose a file.';
+                  } else if (values.file.type !== 'image/jpeg') {
+                    if (
+                      !isBlank(values.file.type) ||
+                      !values.file.name.endsWith('.mae')
+                    ) {
+                      errors.file = 'This file is not supported.';
+                    } else if (values.file.size !== 74) {
+                      errors.file = 'File is too big.';
+                    }
                   }
+                  break;
                 }
-              } else if (values.uploadMethod === 'nnid') {
-                if (isBlank(values.nnid)) {
-                  errors.nnid = 'Please enter a NNID.';
+                case 'nnid': {
+                  if (isBlank(values.nnid)) {
+                    errors.nnid = 'Please enter a NNID.';
+                  }
+                  break;
                 }
-              } else if (values.uploadMethod === 'pnid') {
-                if (isBlank(values.pnid)) {
-                  errors.pnid = 'Please enter a PNID.';
+                case 'pnid': {
+                  if (isBlank(values.pnid)) {
+                    errors.pnid = 'Please enter a PNID.';
+                  }
+                  break;
                 }
-              } else if (values.uploadMethod === 'data_or_url') {
-                if (isBlank(values.miiDataOrUrl)) {
-                  errors.miiDataOrUrl =
-                    'Please enter Mii data, a file or a Mii Studio URL.';
+                case 'data_or_url': {
+                  if (isBlank(values.miiDataOrUrl)) {
+                    errors.miiDataOrUrl =
+                      'Please enter Mii data, a file or a Mii Studio URL.';
+                  }
+                  break;
+                }
+                default: {
+                  break;
                 }
               }
             }
