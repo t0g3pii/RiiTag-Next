@@ -34,7 +34,7 @@ async function getMyUploadedMii(request, response) {
     response.setHeader('Content-Type', 'image/png');
     setFileHeaders(response, 'unknown.png');
     return response
-      .status(HTTP_CODE.NOT_FOUND)
+      .status(HTTP_CODE.OK)
       .send(await fs.promises.readFile(PUBLIC.UNKNOWN_MII));
   }
 
@@ -49,7 +49,7 @@ async function getMyUploadedMii(request, response) {
       response.setHeader('Content-Type', 'image/png');
       setFileHeaders(response, 'unknown.png');
       return response
-        .status(HTTP_CODE.NOT_FOUND)
+        .status(HTTP_CODE.OK)
         .send(await fs.promises.readFile(PUBLIC.UNKNOWN_MII));
     }
   }

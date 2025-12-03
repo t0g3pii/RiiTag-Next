@@ -19,7 +19,12 @@ function EditYourMiiCard({ miiInfo }) {
       <Card.Body>
         <Formik
           initialValues={{
-            miiType: miiInfo.mii_type,
+            // CMOC ist derzeit deaktiviert – beim Öffnen des Editors
+            // standardmäßig auf Guest umschalten, falls zuvor CMOC gesetzt war.
+            miiType:
+              miiInfo.mii_type === MII_TYPE.CMOC
+                ? MII_TYPE.GUEST
+                : miiInfo.mii_type,
             guestMii:
               isValidGuestMii(miiInfo.mii_data) === false
                 ? 'unknown'
@@ -27,6 +32,10 @@ function EditYourMiiCard({ miiInfo }) {
             cmocEntryNo:
               miiInfo.cmoc_entry_no === null ? '' : miiInfo.cmoc_entry_no,
             file: null,
+            uploadMethod: 'nnid',
+            nnid: '',
+            pnid: '',
+            miiDataOrUrl: '',
           }}
           validate={(values) => {
             const errors = {};
@@ -40,16 +49,31 @@ function EditYourMiiCard({ miiInfo }) {
             }
 
             if (values.miiType === MII_TYPE.UPLOAD) {
-              if (values.file === null) {
-                errors.file = 'Please choose a file.';
-              } else if (values.file.type !== 'image/jpeg') {
-                if (
-                  !isBlank(values.file.type) ||
-                  !values.file.name.endsWith('.mae')
-                ) {
-                  errors.file = 'This file is not supported.';
-                } else if (values.file.size !== 74) {
-                  errors.file = 'File is too big.';
+              if (values.uploadMethod === 'qr_or_file') {
+                if (values.file === null) {
+                  errors.file = 'Please choose a file.';
+                } else if (values.file.type !== 'image/jpeg') {
+                  if (
+                    !isBlank(values.file.type) ||
+                    !values.file.name.endsWith('.mae')
+                  ) {
+                    errors.file = 'This file is not supported.';
+                  } else if (values.file.size !== 74) {
+                    errors.file = 'File is too big.';
+                  }
+                }
+              } else if (values.uploadMethod === 'nnid') {
+                if (isBlank(values.nnid)) {
+                  errors.nnid = 'Please enter a NNID.';
+                }
+              } else if (values.uploadMethod === 'pnid') {
+                if (isBlank(values.pnid)) {
+                  errors.pnid = 'Please enter a PNID.';
+                }
+              } else if (values.uploadMethod === 'data_or_url') {
+                if (isBlank(values.miiDataOrUrl)) {
+                  errors.miiDataOrUrl =
+                    'Please enter Mii data, a file or a Mii Studio URL.';
                 }
               }
             }
@@ -69,6 +93,27 @@ function EditYourMiiCard({ miiInfo }) {
                 }
                 case MII_TYPE.CMOC: {
                   body.cmocEntryNo = values.cmocEntryNo;
+                  break;
+                }
+                case MII_TYPE.UPLOAD: {
+                  body.uploadMethod = values.uploadMethod;
+                  switch (values.uploadMethod) {
+                    case 'nnid': {
+                      body.nnid = values.nnid;
+                      break;
+                    }
+                    case 'pnid': {
+                      body.pnid = values.pnid;
+                      break;
+                    }
+                    case 'data_or_url': {
+                      body.miiDataOrUrl = values.miiDataOrUrl;
+                      break;
+                    }
+                    default: {
+                      break;
+                    }
+                  }
                   break;
                 }
                 default: {
@@ -110,10 +155,14 @@ function EditYourMiiCard({ miiInfo }) {
               });
             };
 
-            toast.promise(
-              values.miiType === MII_TYPE.UPLOAD
+            const requestPromise =
+              values.miiType === MII_TYPE.UPLOAD &&
+              values.uploadMethod === 'qr_or_file'
                 ? handleMultiPartForm()
-                : handleJsonForm(),
+                : handleJsonForm();
+
+            toast.promise(
+              requestPromise,
               {
                 pending: 'Updating Mii...',
                 success: {
@@ -167,44 +216,49 @@ function EditYourMiiCard({ miiInfo }) {
                   />
                 </Tab>
                 <Tab title="Check Mii Out Channel" eventKey={MII_TYPE.CMOC}>
-                  <Row className="text-center mb-2">
-                    <Col>
-                      <img
-                        alt="Mii Preview"
-                        src={
-                          errors.cmocEntryNo
-                            ? '/img/miis/guests/unknown.png'
-                            : `/api/cmoc/${values.cmocEntryNo}`
-                        }
-                        width={128}
-                        height={128}
-                      />
-                    </Col>
-                  </Row>
-
+                  {values.cmocEntryNo && (
+                    <Row className="text-center mb-2">
+                      <Col>
+                        <img
+                          alt="Mii Preview"
+                          src={
+                            errors.cmocEntryNo
+                              ? '/img/miis/guests/unknown.png'
+                              : `/api/cmoc/${values.cmocEntryNo}`
+                          }
+                          width={128}
+                          height={128}
+                        />
+                      </Col>
+                    </Row>
+                  )}
                   <CmocForm
                     error={errors.cmocEntryNo}
                     handleBlur={handleBlur}
                     handleChange={handleChange}
                     touched={touched}
+                    disabled
                     value={values.cmocEntryNo}
                   />
                 </Tab>
                 <Tab title="Upload" eventKey={MII_TYPE.UPLOAD}>
-                  <Row className="text-center mb-2">
-                    <Col>
-                      <img
-                        alt="Mii Preview"
-                        src={`api/account/uploaded-mii?${miiPreviewCount}`}
-                        width={128}
-                        height={128}
-                      />
-                    </Col>
-                  </Row>
-
+                  {miiInfo.mii_type !== MII_TYPE.GUEST && (
+                    <Row className="text-center mb-2">
+                      <Col>
+                        <img
+                          alt="Mii Preview"
+                          src={`api/account/uploaded-mii?${miiPreviewCount}`}
+                          width={128}
+                          height={128}
+                        />
+                      </Col>
+                    </Row>
+                  )}
                   <MiiUploadForm
                     error={errors.file}
                     setFieldValue={setFieldValue}
+                    values={values}
+                    errors={errors}
                   />
                 </Tab>
               </Tabs>
@@ -214,7 +268,7 @@ function EditYourMiiCard({ miiInfo }) {
                   className="px-5"
                   variant="success"
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || values.miiType === MII_TYPE.CMOC}
                 >
                   Save
                 </Button>

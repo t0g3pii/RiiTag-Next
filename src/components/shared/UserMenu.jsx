@@ -89,25 +89,12 @@ function UserMenu() {
             <span>Edit RiiTag</span>
           </NavDropdown.Item>
         </Link>
-        {/* <Link href="/mii" passHref legacyBehavior>
+        <Link href="/mii" passHref legacyBehavior>
           <NavDropdown.Item>
             <FontAwesomeIcon className="me-2" icon={faImage} />
             <span>Edit Mii</span>
           </NavDropdown.Item>
-        </Link> */}
-        <NavDropdown.Item onClick={() => toast.error('This feature is currently out of order :(', {
-position: "bottom-center",
-autoClose: 5000,
-hideProgressBar: false,
-closeOnClick: true,
-pauseOnHover: false,
-draggable: true,
-progress: undefined,
-theme: "dark"
-})}>
-            <FontAwesomeIcon className="me-2" icon={faImage} />
-            <span>Edit Mii</span>
-          </NavDropdown.Item>
+        </Link>
         <NavDropdown.Item onClick={() => toast.error('Im currently working on this feature :) Please come back another day :D', {
 position: "bottom-center",
 autoClose: 5000,
